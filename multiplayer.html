@@ -806,28 +806,28 @@
                 }
             }
 
-            updateDisplay() {
-                if (!this.gameState) return;
-                
-                // Update game info
-                document.getElementById('trump-suit').textContent = this.gameState.trumpSuit || 'None';
-                document.getElementById('current-player').textContent = this.getPlayerName(this.gameState.currentPlayer);
-                document.getElementById('current-dealer').textContent = this.getPlayerName(this.gameState.currentDealer);
-                document.getElementById('current-trick').textContent = `${this.gameState.trickNumber}/13`;
+                         updateDisplay() {
+                 if (!this.gameState) return;
+                 
+                 // Update game info
+                 document.getElementById('trump-suit').textContent = this.gameState.trumpSuit || 'None';
+                 document.getElementById('current-player').textContent = this.getPlayerName(this.gameState.currentPlayer);
+                 document.getElementById('current-dealer').textContent = this.getPlayerName(this.gameState.currentDealer);
+                 document.getElementById('current-trick').textContent = `${this.gameState.trickNumber}/13`;
 
-                // Update scores
-                document.getElementById('team1-talents').textContent = this.gameState.scores.team1.talents;
-                document.getElementById('team1-coats').textContent = this.gameState.scores.team1.coats;
-                document.getElementById('team1-round-wins').textContent = this.gameState.scores.team1.roundWins;
-                document.getElementById('team2-talents').textContent = this.gameState.scores.team2.talents;
-                document.getElementById('team2-coats').textContent = this.gameState.scores.team2.coats;
-                document.getElementById('team2-round-wins').textContent = this.gameState.scores.team2.roundWins;
+                 // Update scores
+                 document.getElementById('team1-talents').textContent = this.gameState.scores.team1.talents;
+                 document.getElementById('team1-coats').textContent = this.gameState.scores.team1.coats;
+                 document.getElementById('team1-round-wins').textContent = this.gameState.scores.team1.roundWins;
+                 document.getElementById('team2-talents').textContent = this.gameState.scores.team2.talents;
+                 document.getElementById('team2-coats').textContent = this.gameState.scores.team2.coats;
+                 document.getElementById('team2-round-wins').textContent = this.gameState.scores.team2.roundWins;
 
-                // Update team names
-                document.getElementById('team1-name').textContent = `${this.gameState.teamNames.team1} (${this.getPlayerName(0)} & ${this.getPlayerName(2)})`;
-                document.getElementById('team2-name').textContent = `${this.gameState.teamNames.team2} (${this.getPlayerName(1)} & ${this.getPlayerName(3)})`;
+                 // Update team names
+                 document.getElementById('team1-name').textContent = `${this.gameState.teamNames.team1} (${this.getPlayerName(0)} & ${this.getPlayerName(2)})`;
+                 document.getElementById('team2-name').textContent = `${this.gameState.teamNames.team2} (${this.getPlayerName(1)} & ${this.getPlayerName(3)})`;
 
-                                 // Update player hands and tricks
+                 // Update player hands and tricks
                  this.gameState.players.forEach((player, index) => {
                      document.getElementById(`player${player.id}-name`).textContent = player.name;
                      document.getElementById(`player${player.id}-tricks`).textContent = player.tricks;
@@ -835,8 +835,9 @@
                      const handElement = document.getElementById(`player${player.id}-hand`);
                      handElement.innerHTML = '';
                      
-                     // Always show card backs for other players (except current player)
-                     const isCurrentPlayer = index === this.gameState.currentPlayer;
+                     // Check if this player is the current viewer (the one using this browser)
+                     const isCurrentViewer = player.id === this.playerId;
+                     const isCurrentTurn = index === this.gameState.currentPlayer;
                      
                      if (this.gameState.gameState === 'waiting') {
                          // Show card backs for all players when waiting
@@ -847,14 +848,14 @@
                              handElement.appendChild(cardBack);
                          }
                      } else {
-                         // Show actual cards only for current player, card backs for others
-                         if (isCurrentPlayer) {
-                             // Show actual cards for current player
+                         // Show actual cards only for the current viewer, card backs for everyone else
+                         if (isCurrentViewer) {
+                             // Show actual cards for the current viewer
                              player.hand.forEach((card, cardIndex) => {
                                  const cardElement = this.createCardElement(card);
                                  
-                                 // Make cards clickable during their turn
-                                 if (this.gameState.gameState === 'playing' && this.isValidMove(player, card)) {
+                                 // Make cards clickable only during their turn
+                                 if (isCurrentTurn && this.gameState.gameState === 'playing' && this.isValidMove(player, card)) {
                                      cardElement.classList.add('playable');
                                      cardElement.addEventListener('click', () => {
                                          this.playCard(cardIndex);
@@ -864,7 +865,7 @@
                                  handElement.appendChild(cardElement);
                              });
                          } else {
-                             // Show card backs for other players
+                             // Show card backs for all other players
                              for (let i = 0; i < player.hand.length; i++) {
                                  const cardBack = document.createElement('div');
                                  cardBack.className = 'card card-back';
@@ -873,15 +874,15 @@
                              }
                          }
                      }
-                    
-                    // Highlight current player
-                    const playerArea = handElement.closest('.player-area');
-                    if (index === this.gameState.currentPlayer && this.gameState.gameState === 'playing') {
-                        playerArea.classList.add('current-turn');
-                    } else {
-                        playerArea.classList.remove('current-turn');
-                    }
-                });
+                     
+                     // Highlight current player
+                     const playerArea = handElement.closest('.player-area');
+                     if (isCurrentTurn && this.gameState.gameState === 'playing') {
+                         playerArea.classList.add('current-turn');
+                     } else {
+                         playerArea.classList.remove('current-turn');
+                     }
+                 });
 
                 // Update round info
                 const team1Tricks = this.gameState.players[0].tricks + this.gameState.players[2].tricks;
