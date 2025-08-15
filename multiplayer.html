@@ -6,23 +6,33 @@
     <title>Kaat Color - Multiplayer</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
         .multiplayer-setup {
             text-align: center;
             padding: 40px;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 100px auto;
         }
         
         .multiplayer-setup h1 {
-            color: #2c3e50;
+            color: white;
             margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .setup-form {
             background: white;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         .form-group {
@@ -32,119 +42,137 @@
         
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
             color: #2c3e50;
+            font-size: 14px;
         }
         
         .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
             font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
         }
         
         .form-group input:focus {
             border-color: #3498db;
             outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         .btn-group {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 15px;
+            margin-top: 25px;
         }
         
         .btn-group button {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
         
         .btn-create {
-            background-color: #27ae60;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
             color: white;
         }
         
         .btn-create:hover {
-            background-color: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
         }
         
         .btn-join {
-            background-color: #3498db;
+            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
         }
         
         .btn-join:hover {
-            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
         }
         
         .connection-status {
             position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 8px 12px;
-            border-radius: 5px;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 25px;
             font-size: 12px;
             font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
         .status-connected {
-            background-color: #27ae60;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
             color: white;
         }
         
         .status-disconnected {
-            background-color: #e74c3c;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
         }
         
         .status-connecting {
-            background-color: #f39c12;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
             color: white;
         }
         
         .player-list {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .player-list h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
         }
         
         .player-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 12px 15px;
+            margin: 8px 0;
             background: #f8f9fa;
-            border-radius: 5px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
         }
         
         .player-name {
             font-weight: bold;
+            color: #2c3e50;
         }
         
         .player-team {
-            padding: 4px 8px;
-            border-radius: 3px;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
         }
         
         .team-1 {
-            background-color: #3498db;
+            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
         }
         
         .team-2 {
-            background-color: #e74c3c;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
         }
         
@@ -153,6 +181,9 @@
             color: #7f8c8d;
             font-style: italic;
             margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 8px;
         }
         
         .game-controls-multiplayer {
@@ -162,6 +193,271 @@
         
         .game-controls-multiplayer button {
             margin: 0 10px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .game-controls-multiplayer button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Game container improvements */
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .game-header h1 {
+            margin: 0 0 15px 0;
+            font-size: 2em;
+        }
+        
+        .game-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .trump-suit.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Scoreboard improvements */
+        .scoreboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .team-1, .team-2 {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-1 h3 {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .team-2 h3 {
+            color: #e74c3c;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+        
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        /* Game board improvements */
+        .game-board {
+            display: grid;
+            grid-template-areas: 
+                ". player2 ."
+                "player1 center player3"
+                ". player4 .";
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .player-area {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .player-area.current-turn {
+            box-shadow: 0 0 0 3px #f39c12, 0 8px 25px rgba(243, 156, 18, 0.3);
+            transform: scale(1.02);
+        }
+        
+        .player-area:nth-child(1) { grid-area: player1; }
+        .player-area:nth-child(2) { grid-area: player2; }
+        .player-area:nth-child(3) { grid-area: player3; }
+        .player-area:nth-child(4) { grid-area: player4; }
+        
+        .center-area {
+            grid-area: center;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .player-info h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .player-tricks {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .player-hand {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+        
+        /* Card improvements */
+        .card {
+            width: 40px;
+            height: 60px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+        
+        .card.playable {
+            border-color: #f39c12;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        .card.playable:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.7);
+        }
+        
+        .card-back {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            border-color: #2c3e50;
+        }
+        
+        .card.red {
+            color: #e74c3c;
+        }
+        
+        .card.black {
+            color: #2c3e50;
+        }
+        
+        .card-value {
+            font-size: 10px;
+            line-height: 1;
+        }
+        
+        .card-suit {
+            font-size: 14px;
+            line-height: 1;
+        }
+        
+        /* Trick pile improvements */
+        .trick-pile {
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .trick-pile .card {
+            transform-origin: center;
+        }
+        
+        /* Game messages */
+        .game-messages {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-areas: 
+                    "player2"
+                    "center"
+                    "player1"
+                    "player3"
+                    "player4";
+            }
+            
+            .scoreboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -531,40 +827,52 @@
                 document.getElementById('team1-name').textContent = `${this.gameState.teamNames.team1} (${this.getPlayerName(0)} & ${this.getPlayerName(2)})`;
                 document.getElementById('team2-name').textContent = `${this.gameState.teamNames.team2} (${this.getPlayerName(1)} & ${this.getPlayerName(3)})`;
 
-                // Update player hands and tricks
-                this.gameState.players.forEach((player, index) => {
-                    document.getElementById(`player${player.id}-name`).textContent = player.name;
-                    document.getElementById(`player${player.id}-tricks`).textContent = player.tricks;
-                    
-                    const handElement = document.getElementById(`player${player.id}-hand`);
-                    handElement.innerHTML = '';
-                    
-                    if (this.gameState.gameState === 'waiting') {
-                        // Show card backs
-                        for (let i = 0; i < 13; i++) {
-                            const cardBack = document.createElement('div');
-                            cardBack.className = 'card card-back';
-                            cardBack.innerHTML = '🂠';
-                            handElement.appendChild(cardBack);
-                        }
-                    } else {
-                        // Show actual cards
-                        player.hand.forEach((card, cardIndex) => {
-                            const cardElement = this.createCardElement(card);
-                            
-                            // Only make cards clickable for current player and during their turn
-                            if (index === this.gameState.currentPlayer && 
-                                this.gameState.gameState === 'playing' &&
-                                this.isValidMove(player, card)) {
-                                cardElement.classList.add('playable');
-                                cardElement.addEventListener('click', () => {
-                                    this.playCard(cardIndex);
-                                });
-                            }
-                            
-                            handElement.appendChild(cardElement);
-                        });
-                    }
+                                 // Update player hands and tricks
+                 this.gameState.players.forEach((player, index) => {
+                     document.getElementById(`player${player.id}-name`).textContent = player.name;
+                     document.getElementById(`player${player.id}-tricks`).textContent = player.tricks;
+                     
+                     const handElement = document.getElementById(`player${player.id}-hand`);
+                     handElement.innerHTML = '';
+                     
+                     // Always show card backs for other players (except current player)
+                     const isCurrentPlayer = index === this.gameState.currentPlayer;
+                     
+                     if (this.gameState.gameState === 'waiting') {
+                         // Show card backs for all players when waiting
+                         for (let i = 0; i < 13; i++) {
+                             const cardBack = document.createElement('div');
+                             cardBack.className = 'card card-back';
+                             cardBack.innerHTML = '🂠';
+                             handElement.appendChild(cardBack);
+                         }
+                     } else {
+                         // Show actual cards only for current player, card backs for others
+                         if (isCurrentPlayer) {
+                             // Show actual cards for current player
+                             player.hand.forEach((card, cardIndex) => {
+                                 const cardElement = this.createCardElement(card);
+                                 
+                                 // Make cards clickable during their turn
+                                 if (this.gameState.gameState === 'playing' && this.isValidMove(player, card)) {
+                                     cardElement.classList.add('playable');
+                                     cardElement.addEventListener('click', () => {
+                                         this.playCard(cardIndex);
+                                     });
+                                 }
+                                 
+                                 handElement.appendChild(cardElement);
+                             });
+                         } else {
+                             // Show card backs for other players
+                             for (let i = 0; i < player.hand.length; i++) {
+                                 const cardBack = document.createElement('div');
+                                 cardBack.className = 'card card-back';
+                                 cardBack.innerHTML = '🂠';
+                                 handElement.appendChild(cardBack);
+                             }
+                         }
+                     }
                     
                     // Highlight current player
                     const playerArea = handElement.closest('.player-area');
