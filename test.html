@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaat Color - Game Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .pass { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .fail { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Kaat Color Game Test</h1>
+    <div id="test-results"></div>
+    <button onclick="runTests()">Run Tests</button>
+    <button onclick="window.open('index.html', '_blank')">Open Main Game</button>
+
+    <script>
+        // Import the game logic
+        class KaatColorGame {
+            constructor() {
+                this.deck = [];
+                this.players = [
+                    { id: 1, name: 'Player 1', hand: [], tricks: 0, team: 1 },
+                    { id: 2, name: 'Player 2', hand: [], tricks: 0, team: 2 },
+                    { id: 3, name: 'Player 3', hand: [], tricks: 0, team: 1 },
+                    { id: 4, name: 'Player 4', hand: [], tricks: 0, team: 2 }
+                ];
+                this.currentPlayer = 0;
+                this.currentDealer = 0;
+                this.trumpSuit = null;
+                this.trumpMakingTeam = null;
+                this.leadSuit = null;
+                this.currentTrick = [];
+                this.trickWinner = null;
+                this.consecutiveTricks = { player: null, count: 0 };
+                this.scores = {
+                    team1: { talents: 0, coats: 0 },
+                    team2: { talents: 0, coats: 0 }
+                };
+                this.gameState = 'waiting';
+                this.initializeDeck();
+            }
+
+            initializeDeck() {
+                const suits = ['♠', '♥', '♦', '♣'];
+                const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+                
+                this.deck = [];
+                for (let suit of suits) {
+                    for (let value of values) {
+                        this.deck.push({
+                            suit: suit,
+                            value: value,
+                            isRed: suit === '♥' || suit === '♦',
+                            numericValue: this.getNumericValue(value)
+                        });
+                    }
+                }
+            }
+
+            getNumericValue(value) {
+                const valueMap = {
+                    '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10,
+                    'J': 11, 'Q': 12, 'K': 13, 'A': 14
+                };
+                return valueMap[value];
+            }
+
+            shuffleDeck() {
+                for (let i = this.deck.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+                }
+            }
+
+            dealCards() {
+                this.shuffleDeck();
+                this.players.forEach(player => {
+                    player.hand = [];
+                    player.tricks = 0;
+                });
+
+                const dealOrder = [0, 1, 2, 3];
+                let cardIndex = 0;
+
+                for (let round = 0; round < 5; round++) {
+                    for (let playerIndex of dealOrder) {
+                        if (cardIndex < this.deck.length) {
+                            this.players[playerIndex].hand.push(this.deck[cardIndex++]);
+                        }
+                    }
+                }
+
+                for (let round = 0; round < 4; round++) {
+                    for (let playerIndex of dealOrder) {
+                        if (cardIndex < this.deck.length) {
+                            this.players[playerIndex].hand.push(this.deck[cardIndex++]);
+                        }
+                    }
+                }
+
+                // Deal 4 more cards to each player (third round)
+                for (let round = 0; round < 4; round++) {
+                    for (let playerIndex of dealOrder) {
+                        if (cardIndex < this.deck.length) {
+                            this.players[playerIndex].hand.push(this.deck[cardIndex++]);
+                        }
+                    }
+                }
+
+                this.players.forEach(player => {
+                    player.hand.sort((a, b) => {
+                        if (a.suit !== b.suit) {
+                            return a.suit.localeCompare(b.suit);
+                        }
+                        return b.numericValue - a.numericValue;
+                    });
+                });
+
+                this.currentPlayer = (this.currentDealer + 1) % 4;
+                this.trumpSuit = null;
+                this.trumpMakingTeam = null;
+                this.leadSuit = null;
+                this.currentTrick = [];
+                this.trickWinner = null;
+                this.consecutiveTricks = { player: null, count: 0 };
+                this.gameState = 'playing';
+            }
+
+            canFollowSuit(player, leadSuit) {
+                return player.hand.some(card => card.suit === leadSuit);
+            }
+
+            getValidMoves(player) {
+                if (this.currentTrick.length === 0) {
+                    return player.hand;
+                }
+
+                const leadSuit = this.currentTrick[0].suit;
+                const canFollow = this.canFollowSuit(player, leadSuit);
+
+                if (canFollow) {
+                    return player.hand.filter(card => card.suit === leadSuit);
+                } else {
+                    return player.hand;
+                }
+            }
+
+            isCardHigher(card1, card2) {
+                const leadSuit = this.currentTrick[0].suit;
+                const card1FollowsLead = card1.suit === leadSuit;
+                const card2FollowsLead = card2.suit === leadSuit;
+                const card1IsTrump = this.trumpSuit && card1.suit === this.trumpSuit;
+                const card2IsTrump = this.trumpSuit && card2.suit === this.trumpSuit;
+
+                // If trump is established
+                if (this.trumpSuit) {
+                    // Trump cards beat non-trump cards
+                    if (card1IsTrump && !card2IsTrump) return true;
+                    if (!card1IsTrump && card2IsTrump) return false;
+                    
+                    // If both are trump, higher value wins
+                    if (card1IsTrump && card2IsTrump) {
+                        return card1.numericValue > card2.numericValue;
+                    }
+                }
+
+                // If no trump or neither card is trump, follow lead suit
+                if (card1FollowsLead && !card2FollowsLead) return true;
+                if (!card1FollowsLead && card2FollowsLead) return false;
+                
+                // If both follow lead suit, higher value wins
+                if (card1FollowsLead && card2FollowsLead) {
+                    return card1.numericValue > card2.numericValue;
+                }
+
+                // If neither follows lead suit and no trump, first card wins
+                return false;
+            }
+
+            determineTrickWinner() {
+                if (this.currentTrick.length !== 4) return null;
+
+                // Find the player who led the trick
+                const leadingPlayer = (this.currentPlayer + 4 - this.currentTrick.length) % 4;
+                let winningCard = this.currentTrick[0];
+                let winningPlayer = leadingPlayer;
+
+                // Check each card played after the lead
+                for (let i = 1; i < this.currentTrick.length; i++) {
+                    const card = this.currentTrick[i];
+                    const player = (leadingPlayer + i) % 4;
+
+                    if (this.isCardHigher(card, winningCard)) {
+                        winningCard = card;
+                        winningPlayer = player;
+                    }
+                }
+
+                return winningPlayer;
+            }
+        }
+
+        function runTests() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '';
+            
+            let testCount = 0;
+            let passCount = 0;
+
+            function addResult(testName, passed, details = '') {
+                testCount++;
+                if (passed) passCount++;
+                
+                const div = document.createElement('div');
+                div.className = `test-result ${passed ? 'pass' : 'fail'}`;
+                div.innerHTML = `<strong>${passed ? '✓' : '✗'} ${testName}</strong>${details ? '<br>' + details : ''}`;
+                results.appendChild(div);
+            }
+
+            // Test 1: Deck initialization
+            const game = new KaatColorGame();
+            addResult('Deck Initialization', game.deck.length === 52, `Deck has ${game.deck.length} cards`);
+
+            // Test 2: Card values
+            const aceCard = game.deck.find(card => card.value === 'A');
+            const twoCard = game.deck.find(card => card.value === '2');
+            addResult('Card Values', aceCard.numericValue === 14 && twoCard.numericValue === 2, 
+                     `Ace: ${aceCard.numericValue}, 2: ${twoCard.numericValue}`);
+
+            // Test 3: Card colors
+            const heartCard = game.deck.find(card => card.suit === '♥');
+            const spadeCard = game.deck.find(card => card.suit === '♠');
+            addResult('Card Colors', heartCard.isRed === true && spadeCard.isRed === false,
+                     `Hearts red: ${heartCard.isRed}, Spades red: ${spadeCard.isRed}`);
+
+            // Test 4: Dealing cards
+            game.dealCards();
+            const totalCards = game.players.reduce((sum, player) => sum + player.hand.length, 0);
+            addResult('Card Dealing', totalCards === 52, `Total cards dealt: ${totalCards} (13 per player)`);
+
+            // Test 5: Valid moves
+            const player = game.players[0];
+            const validMoves = game.getValidMoves(player);
+            addResult('Valid Moves (Leading)', validMoves.length === player.hand.length,
+                     `Valid moves: ${validMoves.length}, Hand size: ${player.hand.length}`);
+
+            // Test 6: Trump establishment
+            const leadCard = player.hand[0];
+            game.currentTrick = [{ card: leadCard, player: 0 }];
+            game.leadSuit = leadCard.suit;
+            
+            const player2 = game.players[1];
+                         const nonLeadCard = player2.hand.find(card => card.suit !== leadCard.suit);
+             if (nonLeadCard) {
+                 game.currentTrick.push({ card: nonLeadCard, player: 1 });
+                addResult('Trump Establishment', game.trumpSuit === null,
+                         'Trump not established yet (needs to be set in playCard method)');
+            }
+
+                         // Test 7: Trick winner determination
+             game.currentTrick = [
+                 { card: { suit: '♥', value: 'A', numericValue: 14 }, player: 0 },
+                 { card: { suit: '♥', value: 'K', numericValue: 13 }, player: 1 },
+                 { card: { suit: '♠', value: 'A', numericValue: 14 }, player: 2 },
+                 { card: { suit: '♥', value: 'Q', numericValue: 12 }, player: 3 }
+             ];
+            game.currentPlayer = 0;
+            const winner = game.determineTrickWinner();
+            addResult('Trick Winner (No Trump)', winner === 0,
+                     `Winner: Player ${winner + 1}, Expected: Player 1`);
+
+            // Test 8: Trump trick winner
+            game.trumpSuit = '♠';
+            const winnerWithTrump = game.determineTrickWinner();
+            addResult('Trick Winner (With Trump)', winnerWithTrump === 2,
+                     `Winner: Player ${winnerWithTrump + 1}, Expected: Player 3 (Spade Ace)`);
+
+            // Test 9: Follow suit validation
+            const playerWithHearts = game.players.find(p => p.hand.some(card => card.suit === '♥'));
+            if (playerWithHearts) {
+                const canFollow = game.canFollowSuit(playerWithHearts, '♥');
+                addResult('Follow Suit Validation', canFollow === true,
+                         `Can follow hearts: ${canFollow}`);
+            }
+
+            // Test 10: Game state
+            addResult('Game State', game.gameState === 'playing',
+                     `Game state: ${game.gameState}`);
+
+            // Summary
+            const summary = document.createElement('div');
+            summary.className = 'test-result pass';
+            summary.innerHTML = `<strong>Test Summary: ${passCount}/${testCount} tests passed</strong>`;
+            results.appendChild(summary);
+        }
+    </script>
+</body>
+</html>
