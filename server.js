@@ -1,7 +1,55 @@
 const WebSocket = require('ws');
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
+
+// Serve static files
+server.on('request', (req, res) => {
+    let filePath = req.url;
+    
+    // Default to landing.html for root
+    if (filePath === '/') {
+        filePath = '/landing.html';
+    }
+    
+    // Remove leading slash
+    filePath = filePath.substring(1);
+    
+    // Map file paths
+    const fileMap = {
+        'landing.html': 'landing.html',
+        'multiplayer.html': 'multiplayer.html',
+        'index.html': 'index.html',
+        'styles.css': 'styles.css',
+        'script.js': 'script.js',
+        'test.html': 'test.html'
+    };
+    
+    const fileName = fileMap[filePath] || filePath;
+    
+    // Get file extension for content type
+    const ext = path.extname(fileName).toLowerCase();
+    const contentType = {
+        '.html': 'text/html',
+        '.css': 'text/css',
+        '.js': 'application/javascript',
+        '.json': 'application/json'
+    }[ext] || 'text/plain';
+    
+    // Read and serve file
+    fs.readFile(fileName, (err, data) => {
+        if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end('<h1>404 - File Not Found</h1><p>Try <a href="/">/</a> for multiplayer or <a href="/index.html">/index.html</a> for single player</p>');
+            return;
+        }
+        
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(data);
+    });
+});
 
 // Game rooms
 const rooms = new Map();

@@ -314,24 +314,16 @@
             }
 
             setupWebSocket() {
-                // For local development
-                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-                    const host = window.location.hostname;
-                    const port = window.location.port || '3000';
-                    const wsUrl = `${protocol}//${host}:${port}`;
-                    this.ws = new WebSocket(wsUrl);
-                } else {
-                    // For production hosting - replace with your actual domain
-                    // Examples:
-                    // Railway: 'wss://your-app-name.railway.app'
-                    // Render: 'wss://your-app-name.onrender.com'
-                    // Heroku: 'wss://your-app-name.herokuapp.com'
-                    
-                    // Replace this URL with your actual hosted domain:
-                    const wsUrl = 'wss://your-app-name.railway.app'; // CHANGE THIS!
-                    this.ws = new WebSocket(wsUrl);
-                }
+                // Auto-detect the WebSocket URL based on current location
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const host = window.location.hostname;
+                const port = window.location.port;
+                
+                // For Railway and other hosting platforms, use the same host
+                const wsUrl = `${protocol}//${host}${port ? ':' + port : ''}`;
+                console.log('Connecting to WebSocket:', wsUrl);
+                
+                this.ws = new WebSocket(wsUrl);
                 
                 this.ws.onopen = () => {
                     this.connected = true;
