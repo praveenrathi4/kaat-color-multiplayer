@@ -300,11 +300,11 @@
             color: #2c3e50;
         }
         
-                 /* Game board improvements - Table Layout */
+                 /* Game board improvements - Compact Table Layout */
          .game-board {
              position: relative;
              width: 100%;
-             height: 600px;
+             height: 500px;
              margin: 20px 0;
              background: linear-gradient(135deg, #2c3e50, #34495e);
              border-radius: 20px;
@@ -317,12 +317,12 @@
              top: 50%;
              left: 50%;
              transform: translate(-50%, -50%);
-             width: 300px;
-             height: 200px;
+             width: 200px;
+             height: 150px;
              background: linear-gradient(45deg, #27ae60, #2ecc71);
              border-radius: 50%;
-             border: 8px solid #2c3e50;
-             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+             border: 6px solid #2c3e50;
+             box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
              display: flex;
              align-items: center;
              justify-content: center;
@@ -332,42 +332,42 @@
          .player-area {
              position: absolute;
              background: white;
-             padding: 20px;
-             border-radius: 15px;
-             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+             padding: 15px;
+             border-radius: 12px;
+             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
              transition: all 0.3s ease;
-             min-width: 200px;
-             max-width: 250px;
+             width: 180px;
+             z-index: 5;
          }
          
          .player-area.current-turn {
-             box-shadow: 0 0 0 4px #f39c12, 0 12px 35px rgba(243, 156, 18, 0.4);
-             transform: scale(1.05);
+             box-shadow: 0 0 0 3px #f39c12, 0 8px 25px rgba(243, 156, 18, 0.4);
+             transform: scale(1.03);
              z-index: 10;
          }
          
-         /* Position players around the table */
+         /* Position players in a tight circle around the table */
          .player-area:nth-child(1) { 
-             bottom: 20px; 
+             bottom: 10px; 
              left: 50%; 
              transform: translateX(-50%);
          }
          
          .player-area:nth-child(2) { 
-             top: 20px; 
+             top: 10px; 
              left: 50%; 
              transform: translateX(-50%);
          }
          
          .player-area:nth-child(3) { 
              top: 50%; 
-             right: 20px; 
+             right: 10px; 
              transform: translateY(-50%);
          }
          
          .player-area:nth-child(4) { 
              top: 50%; 
-             left: 20px; 
+             left: 10px; 
              transform: translateY(-50%);
          }
          
@@ -377,50 +377,52 @@
              left: 50%;
              transform: translate(-50%, -50%);
              background: rgba(255, 255, 255, 0.95);
-             padding: 30px;
-             border-radius: 20px;
-             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+             padding: 20px;
+             border-radius: 15px;
+             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
              text-align: center;
              z-index: 2;
-             min-width: 250px;
+             width: 180px;
          }
         
-        .player-info h3 {
-            margin: 0 0 10px 0;
-            color: #2c3e50;
-            font-size: 1.1em;
-        }
+                 .player-info h3 {
+             margin: 0 0 8px 0;
+             color: #2c3e50;
+             font-size: 1em;
+         }
+         
+         .player-tricks {
+             color: #7f8c8d;
+             font-size: 0.8em;
+             margin-bottom: 8px;
+         }
         
-        .player-tricks {
-            color: #7f8c8d;
-            font-size: 0.9em;
-            margin-bottom: 10px;
-        }
-        
-        .player-hand {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            justify-content: center;
-        }
+                 .player-hand {
+             display: flex;
+             flex-wrap: wrap;
+             gap: 3px;
+             justify-content: center;
+             max-height: 120px;
+             overflow-y: auto;
+         }
         
                  /* Card improvements */
          .card {
-             width: 45px;
-             height: 65px;
+             width: 35px;
+             height: 50px;
              border: 2px solid #ddd;
-             border-radius: 10px;
+             border-radius: 8px;
              display: flex;
              flex-direction: column;
              justify-content: center;
              align-items: center;
-             font-size: 12px;
+             font-size: 10px;
              font-weight: bold;
              cursor: pointer;
              transition: all 0.3s ease;
              background: white;
              position: relative;
-             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
          }
          
          .card.playable {
@@ -469,29 +471,29 @@
          }
          
          .card-value {
-             font-size: 11px;
+             font-size: 9px;
              line-height: 1;
              font-weight: bold;
          }
          
          .card-suit {
-             font-size: 16px;
+             font-size: 12px;
              line-height: 1;
-             margin-top: 2px;
+             margin-top: 1px;
          }
         
                  /* Trick pile improvements */
          .trick-pile {
-             min-height: 100px;
+             min-height: 80px;
              display: flex;
              justify-content: center;
              align-items: center;
              flex-wrap: wrap;
-             gap: 8px;
-             margin-bottom: 20px;
-             padding: 15px;
+             gap: 5px;
+             margin-bottom: 15px;
+             padding: 10px;
              background: rgba(255, 255, 255, 0.1);
-             border-radius: 15px;
+             border-radius: 10px;
              border: 2px dashed rgba(255, 255, 255, 0.3);
          }
          
@@ -525,33 +527,32 @@
                  /* Responsive design */
          @media (max-width: 768px) {
              .game-board {
-                 height: 500px;
+                 height: 450px;
              }
              
              .game-table {
-                 width: 200px;
-                 height: 150px;
+                 width: 150px;
+                 height: 120px;
              }
              
              .player-area {
-                 min-width: 150px;
-                 max-width: 180px;
-                 padding: 15px;
+                 width: 140px;
+                 padding: 10px;
              }
              
              .center-area {
-                 min-width: 200px;
-                 padding: 20px;
+                 width: 140px;
+                 padding: 15px;
              }
              
              .card {
-                 width: 35px;
-                 height: 50px;
-                 font-size: 10px;
+                 width: 28px;
+                 height: 40px;
+                 font-size: 8px;
              }
              
              .card-suit {
-                 font-size: 12px;
+                 font-size: 10px;
              }
              
              .scoreboard {
@@ -573,29 +574,28 @@
              }
              
              .game-table {
-                 width: 150px;
-                 height: 100px;
+                 width: 120px;
+                 height: 90px;
              }
              
              .player-area {
-                 min-width: 120px;
-                 max-width: 140px;
-                 padding: 10px;
+                 width: 120px;
+                 padding: 8px;
              }
              
              .center-area {
-                 min-width: 150px;
-                 padding: 15px;
+                 width: 120px;
+                 padding: 12px;
              }
              
              .card {
-                 width: 30px;
-                 height: 45px;
-                 font-size: 9px;
+                 width: 25px;
+                 height: 35px;
+                 font-size: 7px;
              }
              
              .card-suit {
-                 font-size: 10px;
+                 font-size: 8px;
              }
          }
     </style>
