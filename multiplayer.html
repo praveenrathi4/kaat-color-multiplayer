@@ -610,32 +610,37 @@
         /* Responsive design */
         @media (max-width: 768px) {
             .game-container {
-                padding: 15px;
+                padding: 10px;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                overflow: hidden; /* Prevent scrolling */
             }
             
             .game-header h1 {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
                 background: linear-gradient(45deg, #667eea, #764ba2);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                margin-bottom: 10px;
             }
             
             .game-info {
                 flex-direction: column;
                 align-items: center;
-                gap: 12px;
+                gap: 8px;
+                margin-bottom: 15px;
             }
             
             .scoreboard {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
+                margin-bottom: 15px;
             }
             
             .middle-row {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
             }
             
             .player-1, .player-3 {
@@ -659,7 +664,7 @@
                 flex-direction: column;
             }
             
-            /* BEAUTIFUL MOBILE DESIGN - Modern & Engaging */
+            /* MOBILE TABLE VIEW - All players visible in one screen */
             .game-board {
                 display: grid;
                 grid-template-areas: 
@@ -668,43 +673,52 @@
                     "player4 player4";
                 grid-template-columns: 1fr 2fr 1fr;
                 grid-template-rows: auto 1fr auto;
-                gap: 15px;
+                gap: 12px;
                 position: relative;
-                min-height: 85vh;
+                height: 60vh; /* Fixed height - no scrolling */
                 width: 100%;
-                padding: 10px;
+                padding: 8px;
+                align-items: center;
             }
             
-            /* Center table - Beautiful card design */
+            /* Center table - Compact and beautiful */
             .center-area {
                 grid-area: center;
                 position: relative;
                 width: 100%;
                 max-width: none;
-                background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-                border-radius: 20px;
-                padding: 20px;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-                border: 2px solid rgba(102, 126, 234, 0.1);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+                border-radius: 18px;
+                padding: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                border: 2px solid rgba(102, 126, 234, 0.2);
                 backdrop-filter: blur(10px);
                 margin: 0;
                 order: unset;
+                min-height: 120px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
             
-            /* Player areas - Beautiful positioned layout */
+            /* Player areas - Compact info only (no cards for others) */
             .player-2 {
                 grid-area: player2;
                 position: relative;
                 width: 100%;
                 max-width: none;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                padding: 15px;
-                border-radius: 20px;
-                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+                padding: 12px;
+                border-radius: 18px;
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
                 margin: 0;
                 order: unset;
                 color: white;
                 border: 2px solid rgba(255, 255, 255, 0.2);
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .player-4 {
@@ -712,14 +726,18 @@
                 position: relative;
                 width: 100%;
                 max-width: none;
-                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                padding: 15px;
-                border-radius: 20px;
-                box-shadow: 0 10px 25px rgba(240, 147, 251, 0.3);
+                background: linear-gradient(135deg, rgba(240, 147, 251, 0.9) 0%, rgba(245, 87, 108, 0.9) 100%);
+                padding: 12px;
+                border-radius: 18px;
+                box-shadow: 0 8px 20px rgba(240, 147, 251, 0.25);
                 margin: 0;
                 order: unset;
                 color: white;
                 border: 2px solid rgba(255, 255, 255, 0.2);
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .player-1 {
@@ -727,14 +745,18 @@
                 position: relative;
                 width: 100%;
                 max-width: none;
-                background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-                padding: 15px;
-                border-radius: 20px;
-                box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+                background: linear-gradient(135deg, rgba(79, 172, 254, 0.9) 0%, rgba(0, 242, 254, 0.9) 100%);
+                padding: 12px;
+                border-radius: 18px;
+                box-shadow: 0 8px 20px rgba(79, 172, 254, 0.25);
                 margin: 0;
                 order: unset;
                 color: white;
                 border: 2px solid rgba(255, 255, 255, 0.2);
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .player-3 {
@@ -742,20 +764,24 @@
                 position: relative;
                 width: 100%;
                 max-width: none;
-                background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-                padding: 15px;
-                border-radius: 20px;
-                box-shadow: 0 10px 25px rgba(67, 233, 123, 0.3);
+                background: linear-gradient(135deg, rgba(67, 233, 123, 0.9) 0%, rgba(56, 249, 215, 0.9) 100%);
+                padding: 12px;
+                border-radius: 18px;
+                box-shadow: 0 8px 20px rgba(67, 233, 123, 0.25);
                 margin: 0;
                 order: unset;
                 color: white;
                 border: 2px solid rgba(255, 255, 255, 0.2);
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
-            /* Mobile player info - Beautiful and readable */
+            /* Mobile player info - Compact and readable */
             .player-info h3 {
-                font-size: 1.2rem;
-                margin-bottom: 8px;
+                font-size: 1.1rem;
+                margin-bottom: 4px;
                 text-align: center;
                 color: white;
                 font-weight: 700;
@@ -763,165 +789,201 @@
             }
             
             .tricks-won {
-                font-size: 1rem;
+                font-size: 0.9rem;
                 text-align: center;
                 color: rgba(255, 255, 255, 0.9);
-                margin-bottom: 10px;
+                margin-bottom: 0;
                 font-weight: 500;
             }
             
-            /* Show player hands on mobile with beautiful styling */
+            /* HIDE player hands for other players on mobile - save space! */
             .hand {
-                display: flex;
-                gap: 4px;
-                min-height: 70px;
+                display: none !important;
+            }
+            
+            /* Only show cards for the current player (bottom player) */
+            .player-4 .hand {
+                display: flex !important;
+                gap: 3px;
+                min-height: 50px;
                 justify-content: center;
                 flex-wrap: wrap;
-                padding: 12px 0;
+                padding: 8px 0;
                 background: rgba(255, 255, 255, 0.1);
-                border-radius: 15px;
+                border-radius: 12px;
+                backdrop-filter: blur(5px);
+                margin-top: 8px;
+            }
+            
+            /* Mobile card adjustments - Transparent backgrounds */
+            .card {
+                width: 40px;
+                height: 56px;
+                font-size: 0.8rem;
+                margin: 1px;
+                border-radius: 8px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.4);
+                background: rgba(255, 255, 255, 0.9); /* Semi-transparent */
                 backdrop-filter: blur(5px);
             }
             
-            /* Mobile card adjustments - Beautiful cards */
-            .card {
-                width: 45px;
-                height: 63px;
-                font-size: 0.85rem;
-                margin: 2px;
-                border-radius: 10px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-                border: 2px solid rgba(255, 255, 255, 0.3);
-            }
-            
             .card-value {
-                font-size: 1rem;
+                font-size: 0.9rem;
                 font-weight: 700;
             }
             
             .card-suit {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             
             /* Trick pile mobile adjustments */
             .trick-pile {
-                min-height: 130px;
-                padding: 20px;
+                min-height: 80px;
+                padding: 15px;
                 background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
                 border: 2px dashed rgba(102, 126, 234, 0.3);
-                border-radius: 15px;
+                border-radius: 12px;
             }
             
             .trick-pile .card {
-                width: 50px;
-                height: 70px;
-                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+                width: 45px;
+                height: 63px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             }
             
             /* Beautiful button styling for mobile */
             .btn {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 25px;
-                padding: 15px 30px;
+                border-radius: 20px;
+                padding: 12px 24px;
                 font-weight: 600;
-                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+                box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
                 border: none;
                 color: white;
                 transition: all 0.3s ease;
             }
             
             .btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
             }
             
             /* Game info beautiful styling */
             .game-info > div {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-                border-radius: 15px;
-                padding: 12px 18px;
+                border-radius: 12px;
+                padding: 10px 15px;
                 border: 2px solid rgba(102, 126, 234, 0.2);
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(10px);
             }
             
             /* Scoreboard beautiful styling */
             .team-score {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
-                border-radius: 20px;
+                border-radius: 18px;
                 border: 2px solid rgba(102, 126, 234, 0.15);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(10px);
             }
             
             /* Header beautiful styling */
             .game-header {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
-                border-radius: 25px;
+                border-radius: 20px;
                 border: 2px solid rgba(102, 126, 234, 0.15);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(15px);
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            /* Ensure no scrolling */
+            body {
+                overflow: hidden;
+            }
+            
+            /* Compact spacing */
+            .game-container {
+                padding: 10px;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            /* Make sure everything fits in viewport */
+            .game-board {
+                flex: 1;
+                min-height: 0;
             }
         }
         
         @media (max-width: 480px) {
             .game-header h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             
             .card {
-                width: 40px;
-                height: 56px;
+                width: 35px;
+                height: 49px;
             }
             
             .card-value {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             
             .card-suit {
-                font-size: 1.1rem;
+                font-size: 0.9rem;
             }
             
             /* Even smaller mobile adjustments */
             .center-area {
-                padding: 18px;
+                padding: 12px;
+                min-height: 100px;
             }
             
             .player-area {
-                padding: 12px;
+                padding: 10px;
+                min-height: 50px;
             }
             
             .player-info h3 {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .tricks-won {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             
             .hand {
-                min-height: 60px;
-                gap: 3px;
+                min-height: 45px;
+                gap: 2px;
             }
             
             .trick-pile {
-                min-height: 110px;
-                padding: 15px;
+                min-height: 70px;
+                padding: 12px;
             }
             
             .trick-pile .card {
-                width: 45px;
-                height: 63px;
+                width: 40px;
+                height: 56px;
             }
             
             .btn {
-                padding: 12px 24px;
+                padding: 10px 20px;
                 font-size: 0.9rem;
                 margin: 5px;
             }
             
             .game-board {
-                gap: 12px;
+                gap: 10px;
+                padding: 6px;
+                height: 55vh;
+            }
+            
+            .game-container {
                 padding: 8px;
             }
         }
@@ -934,43 +996,55 @@
                     "player1 center player3";
                 grid-template-columns: 1fr 2fr 1fr;
                 grid-template-rows: 1fr 1fr;
-                gap: 12px;
-                min-height: 75vh;
+                gap: 10px;
+                height: 70vh;
             }
             
             .player-area {
-                padding: 12px;
+                padding: 10px;
+                min-height: 50px;
             }
             
             .hand {
-                min-height: 55px;
+                min-height: 40px;
             }
             
             .card {
-                width: 38px;
-                height: 53px;
+                width: 32px;
+                height: 45px;
             }
             
             .center-area {
-                padding: 18px;
+                padding: 12px;
+                min-height: 100px;
+            }
+            
+            .game-header {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .game-header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 5px;
             }
         }
         
         /* Touch-friendly improvements for mobile */
         @media (max-width: 768px) {
             .card.playable {
-                transform: translateY(-3px) scale(1.05);
-                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+                transform: translateY(-2px) scale(1.03);
+                box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
             }
             
             .card.playable:hover {
-                transform: translateY(-5px) scale(1.08);
-                box-shadow: 0 12px 25px rgba(102, 126, 234, 0.5);
+                transform: translateY(-4px) scale(1.06);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
             }
             
             .btn {
-                min-height: 48px; /* Touch-friendly button size */
-                min-width: 48px;
+                min-height: 44px; /* Touch-friendly button size */
+                min-width: 44px;
             }
             
             .player-area {
@@ -983,8 +1057,8 @@
             }
             
             .player-area:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+                transform: translateY(-1px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             }
             
             .center-area {
@@ -992,8 +1066,8 @@
             }
             
             .center-area:hover {
-                transform: scale(1.02);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+                transform: scale(1.01);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
             }
         }
     </style>
