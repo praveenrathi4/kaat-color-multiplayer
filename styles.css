@@ -415,30 +415,37 @@ body {
 
 @media (max-width: 768px) {
     .game-container {
-        padding: 10px;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     
     .game-header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
     
     .game-info {
         flex-direction: column;
         align-items: center;
+        gap: 12px;
     }
     
     .scoreboard {
         flex-direction: column;
+        gap: 15px;
     }
     
     .hand {
-        gap: 2px;
+        gap: 4px;
     }
     
     .card {
         width: 50px;
         height: 75px;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
     
     .card-value {
@@ -449,140 +456,208 @@ body {
         font-size: 1.2rem;
     }
     
-    /* MOBILE-FIRST LAYOUT - Clean and Readable */
+    /* BEAUTIFUL MOBILE DESIGN - Modern & Engaging */
     .game-board {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-areas: 
+            "player2 player2"
+            "player1 center player3"
+            "player4 player4";
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: auto 1fr auto;
         gap: 15px;
-        position: static;
-        min-height: auto;
+        position: relative;
+        min-height: 85vh;
         width: 100%;
+        padding: 10px;
     }
     
-    /* Center table - Full width on mobile */
+    /* Center table - Beautiful card design */
     .center-area {
-        position: static;
-        transform: none;
+        grid-area: center;
+        position: relative;
         width: 100%;
         max-width: none;
-        order: 2;
-        margin: 15px 0;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        border: 2px solid rgba(102, 126, 234, 0.1);
+        backdrop-filter: blur(10px);
+        margin: 0;
+        order: unset;
     }
     
-    /* Player areas - Clean stacked layout */
+    /* Player areas - Beautiful positioned layout */
     .player-2 {
-        position: static;
-        transform: none;
+        grid-area: player2;
+        position: relative;
         width: 100%;
         max-width: none;
-        order: 1;
-        background: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        margin: 0;
+        order: unset;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
     
     .player-4 {
-        position: static;
-        transform: none;
+        grid-area: player4;
+        position: relative;
         width: 100%;
         max-width: none;
-        order: 3;
-        background: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        margin-top: 10px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(240, 147, 251, 0.3);
+        margin: 0;
+        order: unset;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
     
     .player-1 {
-        position: static;
-        transform: none;
+        grid-area: player1;
+        position: relative;
         width: 100%;
         max-width: none;
-        order: 4;
-        background: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        margin-top: 10px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+        margin: 0;
+        order: unset;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
     
     .player-3 {
-        position: static;
-        transform: none;
+        grid-area: player3;
+        position: relative;
         width: 100%;
         max-width: none;
-        order: 5;
-        background: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
         padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        margin-top: 10px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(67, 233, 123, 0.3);
+        margin: 0;
+        order: unset;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
     
-    /* Mobile player info - Clean and readable */
+    /* Mobile player info - Beautiful and readable */
     .player-info h3 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         margin-bottom: 8px;
         text-align: center;
-        color: #2a5298;
+        color: white;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     
     .tricks-won {
-        font-size: 0.9rem;
+        font-size: 1rem;
         text-align: center;
-        color: #666;
+        color: rgba(255, 255, 255, 0.9);
         margin-bottom: 10px;
+        font-weight: 500;
     }
     
-    /* Show player hands on mobile but compact */
+    /* Show player hands on mobile with beautiful styling */
     .hand {
         display: flex;
-        gap: 3px;
-        min-height: 60px;
+        gap: 4px;
+        min-height: 70px;
         justify-content: center;
         flex-wrap: wrap;
-        padding: 10px 0;
+        padding: 12px 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(5px);
     }
     
-    /* Mobile card adjustments */
+    /* Mobile card adjustments - Beautiful cards */
     .card {
-        width: 40px;
-        height: 56px;
-        font-size: 0.8rem;
-        margin: 1px;
+        width: 45px;
+        height: 63px;
+        font-size: 0.85rem;
+        margin: 2px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.3);
     }
     
     .card-value {
-        font-size: 0.9rem;
+        font-size: 1rem;
+        font-weight: 700;
     }
     
     .card-suit {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     /* Trick pile mobile adjustments */
     .trick-pile {
-        min-height: 120px;
+        min-height: 130px;
         padding: 20px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border: 2px dashed rgba(102, 126, 234, 0.3);
+        border-radius: 15px;
     }
     
     .trick-pile .card {
-        width: 45px;
-        height: 63px;
+        width: 50px;
+        height: 70px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     }
     
-    /* Remove all margins that were causing overlap */
-    .player-2, .player-4, .player-1, .player-3 {
-        margin: 10px 0;
+    /* Beautiful button styling for mobile */
+    .btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 25px;
+        padding: 15px 30px;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
     }
     
-    /* Ensure proper spacing */
-    .player-area {
-        margin: 0;
-        padding: 15px;
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    /* Game info beautiful styling */
+    .game-info > div {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+        border-radius: 15px;
+        padding: 12px 18px;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Scoreboard beautiful styling */
+    .team-score {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+        border-radius: 20px;
+        border: 2px solid rgba(102, 126, 234, 0.15);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Header beautiful styling */
+    .game-header {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+        border-radius: 25px;
+        border: 2px solid rgba(102, 126, 234, 0.15);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15px);
     }
 }
 
